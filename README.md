@@ -1,4 +1,4 @@
-# Jmeter (dockerized)
+# JMeter (dockerized)
 
 ## Description
 This is a dockerized version of the [JMeter](https://jmeter.apache.org/) tool. Nothing more nothing less.
