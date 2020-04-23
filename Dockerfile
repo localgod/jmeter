@@ -1,16 +1,36 @@
-FROM alpine:latest
+FROM alpine:3.11 AS build
 
-LABEL MAINTAINER="https://github.com/localgod/jmeter"
+ARG jmeter_version=5.2.1
 
-RUN apk add openjdk8 --update && rm -rf /var/cache/apk/* && ln -s "/usr/lib/jvm/java-1.8-openjdk/bin/javac" /usr/bin/javac
+ADD http://ftp.download-by.net/apache/jmeter/binaries/apache-jmeter-${jmeter_version}.tgz /apache-jmeter-${jmeter_version}.tgz
 
-ADD http://ftp.download-by.net/apache/jmeter/binaries/apache-jmeter-5.1.1.tgz /apache-jmeter-5.1.1.tgz
+RUN tar zxvf apache-jmeter-${jmeter_version}.tgz
+RUN rm -rf apache-jmeter-${jmeter_version}/licenses apache-jmeter-${jmeter_version}/docs apache-jmeter-${jmeter_version}/printable_docs
+RUN mv apache-jmeter-${jmeter_version} apache-jmeter
 
-RUN tar zxvf apache-jmeter-5.1.1.tgz \
-&& rm -rf apache-jmeter-5.1.1/licenses apache-jmeter-5.1.1/docs apache-jmeter-5.1.1/printable_docs \
-&& ln -s /apache-jmeter-5.1.1/bin/jmeter /usr/bin/jmeter \
-&& rm apache-jmeter-5.1.1.tgz
+FROM alpine:3.11
 
+ARG BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+ARG VCS_REF="$(git rev-parse HEAD)"
+
+LABEL maintainer="https://github.com/localgod/jmeter" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.vendor="Localgod" \
+      org.label-schema.name="jmeter" \
+      org.label-schema.license="MIT" \
+      org.label-schema.description="Jmeter" \
+      org.label-schema.vcs-url="https://github.com/localgod/jmeter" \
+      org.label-schema.vcs-ref=${VCS_REF} \
+      org.label-schema.build-date=${BUILD_DATE} \
+      org.label-schema.url="https://github.com/localgod/jmeter" \
+      org.label-schema.usage="https://github.com/localgod/jmeter/blob/master/README.md"
+
+ARG openjdk8_version=8.242.08-r0
+
+RUN apk --update --no-cache add openjdk8=${openjdk8_version} && ln -s "/usr/lib/jvm/java-1.8-openjdk/bin/javac" /usr/bin/javac
+
+COPY --from=build /apache-jmeter /apache-jmeter
 COPY entrypoint.sh /entrypoint.sh
+RUN ln -s /apache-jmeter/bin/jmeter /usr/bin/jmeter
 
 ENTRYPOINT ["/entrypoint.sh"]
