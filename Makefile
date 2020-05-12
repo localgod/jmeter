@@ -6,7 +6,10 @@ IMAGE=${ORG}/${APP}:${VERSION}
 .PHONY: build run
 
 build:
-	@docker build -t ${IMAGE} .
+	@docker build \
+	--build-arg BUILD_DATE=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ') \
+	--build-arg VCS_REF=$(shell git rev-parse HEAD) \
+	-t ${IMAGE} .
 
 run:
 	@docker run --rm -it -v ${PWD}:/tmp -w /tmp ${IMAGE}

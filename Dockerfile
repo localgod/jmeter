@@ -10,8 +10,8 @@ RUN mv apache-jmeter-${jmeter_version} apache-jmeter
 
 FROM alpine:3.11
 
-ARG BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-ARG VCS_REF="$(git rev-parse HEAD)"
+ARG BUILD_DATE=""
+ARG VCS_REF=""
 
 LABEL maintainer="https://github.com/localgod/jmeter" \
       org.label-schema.schema-version="1.0" \
