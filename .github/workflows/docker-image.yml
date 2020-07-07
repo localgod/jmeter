@@ -21,3 +21,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         image-name: localgod/jmeter:$(date +%s)
+        tag: latest
