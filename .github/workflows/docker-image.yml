@@ -19,5 +19,5 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         image-name: localgod/jmeter
-        dockerfile-location: ./Dockerfile
-        tag: latest
+        dockerfile-location: .
+        tag: latest 
