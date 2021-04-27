@@ -1,6 +1,6 @@
 FROM alpine:3.11 AS build
 
-ARG jmeter_version=5.2.1
+ARG jmeter_version=5.4.1
 
 ADD http://ftp.download-by.net/apache/jmeter/binaries/apache-jmeter-${jmeter_version}.tgz /apache-jmeter-${jmeter_version}.tgz
 
@@ -27,7 +27,7 @@ LABEL maintainer="https://github.com/localgod/jmeter" \
       org.label-schema.url="https://github.com/localgod/jmeter" \
       org.label-schema.usage="https://github.com/localgod/jmeter/blob/master/README.md"
 
-ARG openjdk8_version=8.242.08-r0
+ARG openjdk8_version=8.275.01-r0
 
 RUN apk --update --no-cache add openjdk8=${openjdk8_version} && ln -s "/usr/lib/jvm/java-1.8-openjdk/bin/javac" /usr/bin/javac
 

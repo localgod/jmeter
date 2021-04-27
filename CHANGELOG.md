@@ -8,6 +8,12 @@ This project adheres to [Keep a CHANGELOG](http://keepachangelog.com/)
 
 ## [Unreleased]
 
+## [1.0.2] 2021-04-27
+
+### Updated
+
+-   Bumped jmeter version to 5.4.1
+
 ## [1.0.1] 2020-04-23
 
 ### Updated
