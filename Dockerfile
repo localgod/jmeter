@@ -1,14 +1,13 @@
-FROM alpine:3.11 AS build
+FROM alpine:3.19 AS build
 
-ARG jmeter_version=5.4.1
+ARG jmeter_version=5.6.2
 
-ADD http://ftp.download-by.net/apache/jmeter/binaries/apache-jmeter-${jmeter_version}.tgz /apache-jmeter-${jmeter_version}.tgz
+RUN wget -nv https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-${jmeter_version}.tgz \
+&& tar zxvf apache-jmeter-${jmeter_version}.tgz \
+&& rm -rf apache-jmeter-${jmeter_version}/licenses apache-jmeter-${jmeter_version}/docs apache-jmeter-${jmeter_version}/printable_docs \
+&& mv apache-jmeter-${jmeter_version} apache-jmeter
 
-RUN tar zxvf apache-jmeter-${jmeter_version}.tgz
-RUN rm -rf apache-jmeter-${jmeter_version}/licenses apache-jmeter-${jmeter_version}/docs apache-jmeter-${jmeter_version}/printable_docs
-RUN mv apache-jmeter-${jmeter_version} apache-jmeter
-
-FROM alpine:3.11
+FROM alpine:3.19
 
 ARG BUILD_DATE=""
 ARG VCS_REF=""
@@ -27,9 +26,9 @@ LABEL maintainer="https://github.com/localgod/jmeter" \
       org.label-schema.url="https://github.com/localgod/jmeter" \
       org.label-schema.usage="https://github.com/localgod/jmeter/blob/master/README.md"
 
-ARG openjdk8_version=8.275.01-r0
+ARG openjdk8_version=8.392.08-r1
 
-RUN apk --update --no-cache add openjdk8=${openjdk8_version} && ln -s "/usr/lib/jvm/java-1.8-openjdk/bin/javac" /usr/bin/javac
+RUN apk --update --no-cache add openjdk8=${openjdk8_version}
 
 COPY --from=build /apache-jmeter /apache-jmeter
 COPY entrypoint.sh /entrypoint.sh

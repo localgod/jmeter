@@ -13,6 +13,7 @@ Before using this Docker image, ensure you have the following installed:
 ## Usage
 
 ### Build the docker image
+
 ```bash
 make build
 ```
