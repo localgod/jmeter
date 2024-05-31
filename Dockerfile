@@ -1,13 +1,13 @@
-FROM alpine:3.19 AS build
+FROM alpine:3.20 AS build
 
-ARG jmeter_version=5.6.2
+ARG jmeter_version=5.6.3
 
 RUN wget -nv https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-${jmeter_version}.tgz \
 && tar zxvf apache-jmeter-${jmeter_version}.tgz \
 && rm -rf apache-jmeter-${jmeter_version}/licenses apache-jmeter-${jmeter_version}/docs apache-jmeter-${jmeter_version}/printable_docs \
 && mv apache-jmeter-${jmeter_version} apache-jmeter
 
-FROM alpine:3.19
+FROM alpine:3.20
 
 ARG BUILD_DATE=""
 ARG VCS_REF=""
@@ -26,7 +26,7 @@ LABEL maintainer="https://github.com/localgod/jmeter" \
       org.label-schema.url="https://github.com/localgod/jmeter" \
       org.label-schema.usage="https://github.com/localgod/jmeter/blob/master/README.md"
 
-ARG openjdk8_version=8.392.08-r1
+ARG openjdk8_version=8.402.06-r0
 
 RUN apk --update --no-cache add openjdk8=${openjdk8_version}
 
