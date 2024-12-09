@@ -1,4 +1,4 @@
-FROM alpine:3.20 AS build
+FROM alpine:3.21 AS build
 
 ARG jmeter_version=5.6.3
 
@@ -7,7 +7,7 @@ RUN wget -nv https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-${jmeter_ve
 && rm -rf apache-jmeter-${jmeter_version}/licenses apache-jmeter-${jmeter_version}/docs apache-jmeter-${jmeter_version}/printable_docs \
 && mv apache-jmeter-${jmeter_version} apache-jmeter
 
-FROM alpine:3.20
+FROM alpine:3.21
 
 ARG BUILD_DATE=""
 ARG VCS_REF=""
